@@ -3,19 +3,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   decrement,
   increment,
-  incrementByAmount,
   incrementAsync,
-  incrementIfOdd,
-  selectCount,
-} from './counterSlice';
+  incrementByAmount,
+  selectClasses,
+  setClasses
+} from '../slices/dataSlice';
 import styles from './Counter.module.css';
+import {useNavigate} from 'react-router-dom'
 
 export function Counter() {
-  const count = useSelector(selectCount);
+  const navigate = useNavigate()
+  const count = useSelector(selectClasses);
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
   const incrementValue = Number(incrementAmount) || 0;
+  console.log(count)
 
   return (
     <div>
@@ -45,7 +48,7 @@ export function Counter() {
         />
         <button
           className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
+           onClick={() => dispatch(incrementByAmount(incrementValue))}
         >
           Add Amount
         </button>
@@ -57,9 +60,15 @@ export function Counter() {
         </button>
         <button
           className={styles.button}
-          onClick={() => dispatch(incrementIfOdd(incrementValue))}
+          onClick={() => dispatch(setClasses([2,2,2,31]))}
         >
-          Add If Odd
+          setClasses
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => navigate('/next')}
+        >
+          Next page
         </button>
       </div>
     </div>
