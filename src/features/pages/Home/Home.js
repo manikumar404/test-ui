@@ -4,32 +4,34 @@ import {selectClasses,setClasses} from '../../slices/dataSlice';
 import axios from 'axios'
 import { useEffect } from 'react';
 import SingleClass from '../../components/SingleClass/SingleClass';
+import styles from '../../counter/Counter.module.css';
+import {useNavigate} from 'react-router-dom'
+import dummy from '../dummydata.json'
+
 
 function Home() {
     const classes = useSelector(selectClasses);
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+   
     useEffect(() => {
-        axios
-        .get("http://localhost:3001/tutors/my-class?id=mani")
-        .then(function (response) {
-          dispatch(setClasses(response.data));
-      
-           
-         
-        })
-        .catch(function (error) {
-          
-          console.log(error);
-        })
-        .then(function () {
-        });
+      dispatch(setClasses(dummy));
        
       }, []);
+
+      const add=()=>{
+       return navigate('/add-class')
+      }
 
    
 
   return (
-    <div>{classes.map((clas,index)=> <SingleClass key = {clas._id} index = {index} {...clas}/>)}</div>
+    <div>
+    <br/>
+    <button className={styles.button} onClick = {add} >Add Class</button>
+    <br/>
+    {classes.map((clas,index)=> <SingleClass key = {clas._id} index = {index} {...clas}/>)}
+    </div>
   )
 }
 
